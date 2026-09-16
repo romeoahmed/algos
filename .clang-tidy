@@ -1,0 +1,6 @@
+Checks: >-
+    clang-analyzer-*,bugprone-*,performance-*,modernize-*,
+    cppcoreguidelines-pro-*,cppcoreguidelines-owning-memory,
+    cppcoreguidelines-init-variables,cppcoreguidelines-special-member-functions
+WarningsAsErrors: "*"
+HeaderFilterRegex: "src/.*"

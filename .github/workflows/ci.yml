@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    runs-on: ubuntu-26.04
+    env:
+      UV_LOCKED: "true"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.1.0
+      - name: Check Python
+        run: |
+          uv sync
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run ty check
+          uv run pytest
+
+  cpp:
+    name: C++ (${{ matrix.compiler }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - compiler: Clang
+            os: ubuntu-26.04
+            preset: default
+            options: >-
+              -DCMAKE_CXX_COMPILER=clang++-22
+              -DCMAKE_CXX_FLAGS=-stdlib=libc++
+              -DCMAKE_CXX_CLANG_TIDY=clang-tidy-22
+          - compiler: GCC
+            os: ubuntu-26.04
+            preset: default
+            options: -DCMAKE_CXX_COMPILER=g++-15
+          - compiler: MSVC
+            os: windows-2025-vs2026
+            preset: vs2026
+            prefix: vs2026-
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install libc++
+        if: matrix.compiler == 'Clang'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libc++-22-dev libc++abi-22-dev
+      - name: Check C++ formatting
+        if: matrix.compiler == 'Clang'
+        run: clang-format-22 --dry-run --Werror src/*/*.cpp src/*/*.hpp
+      - name: Configure
+        run: cmake --preset ${{ matrix.preset }} ${{ matrix.options }}
+      - name: Build Debug
+        run: cmake --build --preset ${{ matrix.prefix }}debug
+      - name: Test Debug
+        run: ctest --preset ${{ matrix.prefix }}debug
+      - name: Build Release
+        run: cmake --build --preset ${{ matrix.prefix }}release
+      - name: Test Release
+        run: ctest --preset ${{ matrix.prefix }}release
