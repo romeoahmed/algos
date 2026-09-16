@@ -17,6 +17,7 @@
 | [表达式的所有括号组合](src/expressions/notes.md)                  | 递归枚举，缓存子式             |
 | [每种字符至少出现 k 次的最长子串](src/longest_substring/notes.md) | 按低频字符切分，递归取最大值   |
 | [树的广度优先与深度优先搜索](src/search_tree/notes.md)            | 用待访问序列的合并策略统一搜索 |
+| [A* 最短路径](src/a_star/notes.md)                              | 启发式选择，递归松弛与重新展开 |
 
 ## 运行
 

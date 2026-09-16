@@ -55,6 +55,7 @@ foreach(
         expressions
         longest_substring
         search_tree
+        a_star
 )
     add_executable(
         ${name}
