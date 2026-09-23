@@ -56,6 +56,8 @@ foreach(
         longest_substring
         search_tree
         a_star
+        tromino_tiling
+        karatsuba
 )
     add_executable(
         ${name}
