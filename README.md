@@ -38,6 +38,7 @@ test.cpp       Boost.UT + RapidCheck 测试
 | [用最少箭引爆气球](src/burst_balloons/notes.md)                   | 在最早右端点射箭，筛选剩余区间   |
 | [划分字母区间](src/partition_labels/notes.md)                     | 根据字符的最后位置确定分段边界   |
 | [规则正向推理](src/forward_chaining/notes.md)                     | 按序应用规则，求事实的最小闭包   |
+| [贝叶斯网络推断](src/bayesian_inference/notes.md)                 | 递归枚举，边缘化与归一化         |
 
 ## 运行
 

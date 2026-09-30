@@ -71,6 +71,7 @@ foreach(
         burst_balloons
         partition_labels
         forward_chaining
+        bayesian_inference
 )
     add_executable(
         ${name}
