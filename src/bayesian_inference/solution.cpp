@@ -25,8 +25,8 @@ auto bayesian_inference(std::span<const BooleanNode> network, std::size_t query,
         const auto &node = network.subspan(index).front();
         const auto row = std::ranges::fold_left(
             node.parents, std::size_t{0},
-            [&values](std::size_t row, std::size_t parent) -> std::size_t {
-                return 2 * row + values.at(parent);
+            [&values](std::size_t prefix, std::size_t parent) -> std::size_t {
+                return 2 * prefix + values.at(parent);
             });
         const auto p_true = node.probabilities.at(row);
         const auto branch = [&](bool value) -> double {
