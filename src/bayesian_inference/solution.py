@@ -34,7 +34,7 @@ def bayesian_inference(
         def append_bit(row: int, parent: int) -> int:
             return 2 * row + values[parent]
 
-        row = reduce(append_bit, node.parents, 0)
+        row = reduce(append_bit, node.parents, initial=0)
         p_true = node.probabilities[row]
 
         def branch(value: bool) -> float:
@@ -47,7 +47,7 @@ def bayesian_inference(
             return branch(evidence[index])
         if index == query:
             return branch(query_value)
-        return sum(map(branch, (False, True)))
+        return branch(False) + branch(True)
 
     false_mass = enumerate_all((), False)
     true_mass = enumerate_all((), True)

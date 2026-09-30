@@ -11,8 +11,6 @@ def longest_substring(text: str, k: int) -> int:
     if len(text) < k:
         return 0
     separator = next((char for char, count in Counter(text).items() if count < k), None)
-    return (
-        len(text)
-        if separator is None
-        else max(longest_substring(part, k) for part in text.split(separator))
-    )
+    if separator is None:
+        return len(text)
+    return max(longest_substring(part, k) for part in text.split(separator))

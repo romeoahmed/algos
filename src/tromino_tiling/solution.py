@@ -13,7 +13,7 @@ def tromino_tiling(size: int, hole: Cell) -> tuple[Tile, ...]:
     """Return L-shaped tiles covering the board except for hole.
 
     Requires a power-of-two size >= 1 and 0 <= hole coordinates < size.
-    Tile order is unspecified. Coordinates are zero-based.
+    Tile and cell order are unspecified. Coordinates are zero-based.
     """
     tiles: list[Tile] = []
 

@@ -1,6 +1,5 @@
 #include "solution.hpp"
 
-#include <algorithm>
 #include <boost/ut.hpp>
 #include <cstddef>
 #include <exception>

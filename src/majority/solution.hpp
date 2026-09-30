@@ -3,6 +3,7 @@
 #include <span>
 
 namespace algos {
-// Returns the value occurring more than half the time; it must exist.
+// Return the value occurring strictly more than values.size() / 2 times.
+// Requires a nonempty input with such a majority.
 [[nodiscard]] auto majority(std::span<const int> values) noexcept -> int;
 } // namespace algos

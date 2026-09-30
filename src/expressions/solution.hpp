@@ -5,8 +5,9 @@
 #include <vector>
 
 namespace algos {
-// Returns all parenthesization results, retaining duplicates in any order.
-// Requires 1-20 ASCII characters: operands 0-99 separated by +, -, or *.
+// Return all parenthesization results, retaining duplicates in any order.
+// Requires a valid 1-20 character ASCII expression: operands 0-99 joined by
+// +, -, or *, without whitespace, parentheses, or unary operators.
 [[nodiscard]] auto expressions(std::string_view text)
     -> std::vector<std::int64_t>;
 } // namespace algos

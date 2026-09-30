@@ -12,15 +12,21 @@ def search(tree: Tree, frontier: Frontier, goal: str, merge: Merge) -> Trace:
     """Return a search trace using a pure frontier merge.
 
     Requires disjoint finite ordered subtrees with unique labels; omitted keys
-    are leaves. Steps record (node, frontier before expansion, found).
+    are leaves. Each step records the node, frontier after removal and before
+    expansion, and whether the goal was found.
     """
-    if not frontier:
-        return ()
-    node, rest = frontier[0], frontier[1:]
-    step = ((node, rest, node == goal),)
-    if node == goal:
-        return step
-    return step + search(tree, merge(rest, tree.get(node, ())), goal, merge)
+    trace: list[Step] = []
+
+    def visit(pending: Frontier) -> None:
+        if not pending:
+            return
+        node, rest = pending[0], pending[1:]
+        trace.append((node, rest, node == goal))
+        if node != goal:
+            visit(merge(rest, tree.get(node, ())))
+
+    visit(frontier)
+    return tuple(trace)
 
 
 def bfs(tree: Tree, start: str, goal: str) -> Trace:

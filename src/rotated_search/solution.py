@@ -4,7 +4,8 @@ from collections.abc import Sequence
 def rotated_search(values: Sequence[int], target: int) -> int:
     """Return the target's index, or -1 if absent.
 
-    Requires a rotated strictly increasing sequence; empty is allowed."""
+    Requires a rotated strictly increasing sequence; empty is allowed.
+    """
 
     def search(left: int, right: int) -> int:
         if left == right:

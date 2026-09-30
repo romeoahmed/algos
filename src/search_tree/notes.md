@@ -13,7 +13,7 @@
 - BFS：孩子放在尾部，逐层访问。
 - DFS：孩子按原顺序放在头部，先序遍历。
 
-`merge` 接收两个序列并返回新序列；递归结果拼成完整轨迹，输入树保持不变。
+`merge` 接收两个序列并返回新序列。每步直接追加到本次调用的轨迹缓冲区，最后返回完整结果；输入树保持不变。
 
 ## 伪代码
 
@@ -21,14 +21,18 @@
 
 ```text
 SEARCH(T, F, goal, merge)
-    if F is empty
-        return []
-    node ← F[0]; rest ← F[1:|F|]
-    step ← [(node, rest, node = goal)]
-    if node = goal
-        return step
-    next ← merge(rest, CHILDREN(T, node))
-    return step ⧺ SEARCH(T, next, goal, merge)
+    trace ← []
+
+    VISIT(pending)
+        if pending is empty
+            return
+        node ← pending[0]; rest ← pending[1:|pending|]
+        APPEND(trace, (node, COPY(rest), node = goal))
+        if node ≠ goal
+            VISIT(merge(rest, CHILDREN(T, node)))
+
+    VISIT(F)
+    return trace
 
 BFS(T, start, goal)
     return SEARCH(T, [start], goal, (rest, children) ↦ rest ⧺ children)
@@ -67,8 +71,10 @@ BFS 的尾部追加保证按层访问；DFS 的头部插入保证先完成前一
 
 ## 复杂度与实现
 
-设输入树有 n 个节点，字符串操作按单位成本计。待访问序列的复制、快照和轨迹拼接累计最坏需 O(n²) 时间，额外空间 O(n²)。C++ 映射查找的 O(n log n) 开销包含在此界内；实际字符串长度还会影响复制和比较成本。
+设输入树有 n 个节点，实际访问 k 个节点，S 为各步取出节点前的待访问序列长度之和。字符串操作按单位成本计，构造下一步序列和保存快照共需 O(S) 时间，追加 k 个步骤共需 O(k) 时间。Python 按字典平均常数查找计，总时间 O(S)；C++ 的映射查找另需 O(k log(n + 1)) 时间。
 
-Python 返回不可变元组；C++ 返回拥有字符串和快照的值，并移动递归产生的步骤，避免反复复制快照。算法内不打印。
+两种实现的额外空间均为 O(S)，包含输出、各层待访问序列和 O(k) 递归栈。宽树上 S 最坏为 O(n²)，完整轨迹本身就可能达到这个规模；单链上 S = k，Python 为线性时间和空间，C++ 另计映射查找。实际字符串长度还会影响复制和比较成本。
 
-递归深度为 O(n)，随访问步数而非树高增长。这种完整轨迹适合小规模展示；Python 受递归上限限制，C++ 受可用栈空间限制。
+Python 在局部列表中追加步骤，最后转成不可变元组。C++ 用只读 `span` 借用剩余序列和孩子，仅为快照及新序列复制字符串；合并产生的临时向量存活至递归返回，视图不会悬空。返回结果独立拥有数据，调用之间不共享缓冲区，算法内不打印。
+
+递归调用位于访问步骤的尾部，深度随访问步数而非树高增长。Python 不消除尾调用，C++ 也不保证尾调用优化；这种完整轨迹适合小规模展示，分别受递归上限和可用栈空间限制。

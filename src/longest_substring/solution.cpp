@@ -15,16 +15,14 @@ auto longest_substring(std::string_view text, int k) -> std::size_t {
     if (std::cmp_less(text.size(), k)) {
         return 0;
     }
-    const auto counts = std::ranges::fold_left(
-        text, std::array<std::size_t, 26>{},
-        [](auto frequencies, char c) -> auto {
-            ++frequencies.at(static_cast<std::size_t>(c - 'a'));
-            return frequencies;
-        });
+    auto counts = std::array<std::size_t, 26>{};
+    for (const auto letter : text) {
+        ++counts.at(static_cast<std::size_t>(letter - 'a'));
+    }
     const auto separator =
-        std::ranges::find_if(text, [&counts, k](char c) -> bool {
-            return std::cmp_less(counts.at(static_cast<std::size_t>(c - 'a')),
-                                 k);
+        std::ranges::find_if(text, [&counts, k](char letter) -> bool {
+            return std::cmp_less(
+                counts.at(static_cast<std::size_t>(letter - 'a')), k);
         });
     if (separator == text.end()) {
         return text.size();

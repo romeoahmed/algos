@@ -19,16 +19,14 @@ def infer(facts: Set[str], rules: Sequence[Rule]) -> Inference:
 
     def apply(state: Inference, rule: Rule) -> Inference:
         conditions, conclusion = rule
-        return (
-            Inference(state.facts | {conclusion}, (*state.derived, conclusion))
-            if conclusion not in state.facts and conditions <= state.facts
-            else state
-        )
+        if conclusion in state.facts or not conditions <= state.facts:
+            return state
+        return Inference(state.facts | {conclusion}, (*state.derived, conclusion))
 
     def close(state: Inference) -> Inference:
-        following = reduce(apply, rules, state)
-        return (
-            following if len(following.facts) == len(state.facts) else close(following)
-        )
+        following = reduce(apply, rules, initial=state)
+        if len(following.facts) == len(state.facts):
+            return following
+        return close(following)
 
     return close(Inference(frozenset(facts), ()))

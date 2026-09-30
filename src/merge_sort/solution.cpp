@@ -9,6 +9,7 @@ namespace {
 auto merge(std::span<const int> left, std::span<const int> right)
     -> std::vector<int> {
     auto result = std::vector<int>{};
+    result.reserve(left.size() + right.size());
     while (!left.empty() && !right.empty()) {
         auto &next = left.front() <= right.front() ? left : right;
         result.push_back(next.front());

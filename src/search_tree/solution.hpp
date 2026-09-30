@@ -12,6 +12,7 @@ using Tree = std::map<std::string, Frontier, std::less<>>;
 
 struct Step {
     std::string node;
+    // Pending nodes after removing node, before adding its children.
     Frontier frontier;
     bool found = false;
 
@@ -19,11 +20,14 @@ struct Step {
 };
 using Trace = std::vector<Step>;
 
-// Returns a trace through the goal, or exhausts the subtree rooted at start.
+// Both searches stop at the first match or exhaust the subtree rooted at start.
 // Requires a finite ordered tree with unique labels; omitted keys are leaves.
-// Steps record the frontier after removal but before expansion.
+
+// Return a breadth-first trace, preserving sibling order.
 [[nodiscard]] auto bfs(const Tree &tree, std::string_view start,
                        std::string_view goal) -> Trace;
+
+// Return a preorder trace, preserving sibling order.
 [[nodiscard]] auto dfs(const Tree &tree, std::string_view start,
                        std::string_view goal) -> Trace;
 } // namespace algos

@@ -76,10 +76,11 @@ auto karatsuba(std::string_view x, std::string_view y) -> std::string {
     const auto half = digits / 2;
     const auto [a, b] = split(x, half);
     const auto [c, d] = split(y, half);
-    const auto high = karatsuba(a, c);
+    auto high = karatsuba(a, c);
     const auto low = karatsuba(b, d);
-    const auto cross =
-        subtract(karatsuba(add(a, b), add(c, d)), add(high, low));
-    return add(add(shift(high, 2 * half), shift(cross, half)), low);
+    auto cross = subtract(karatsuba(add(a, b), add(c, d)), add(high, low));
+    return add(
+        add(shift(std::move(high), 2 * half), shift(std::move(cross), half)),
+        low);
 }
 } // namespace algos

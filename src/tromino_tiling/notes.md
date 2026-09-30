@@ -40,8 +40,6 @@ TROMINO-TILING(n, hole)
     return tiles
 ```
 
-这里 `INTEGER(条件)` 表示条件成立时取 1，否则取 0。
-
 ## 示例
 
 n = 4，缺格为 `(0, 0)`。先放中心骨牌 A，再分别用 B、C、D、E 覆盖四个 2×2 子棋盘：

@@ -95,6 +95,34 @@ auto main() -> int try {
         }
     } | std::array{algos::bfs, algos::dfs};
 
+    "chain trace"_test = [](auto search) -> void {
+        auto tree = algos::Tree{};
+        auto expected = algos::Trace{};
+        for (auto i = 0; i < 80; ++i) {
+            const auto node = std::to_string(i);
+            if (i < 79) {
+                tree.emplace(node, algos::Frontier{std::to_string(i + 1)});
+            }
+            expected.push_back(
+                {.node = node, .frontier = {}, .found = i == 79});
+        }
+        expect(std::ranges::equal(search(tree, "0", "79"), expected));
+    } | std::array{algos::bfs, algos::dfs};
+
+    "trace owns its snapshots"_test = [](auto search) -> void {
+        auto tree = algos::Tree{{"A", {"B", "C"}}};
+        const auto expected =
+            algos::Trace{{.node = "A", .frontier = {}, .found = false},
+                         {.node = "B", .frontier = {"C"}, .found = true}};
+        const auto result = search(tree, "A", "B");
+        expect(std::ranges::equal(result, expected));
+        tree.clear();
+        expect(std::ranges::equal(
+            search(tree, "other", "missing"),
+            algos::Trace{{.node = "other", .frontier = {}, .found = false}}));
+        expect(std::ranges::equal(result, expected));
+    } | std::array{algos::bfs, algos::dfs};
+
     "stops before expanding the goal"_test = [] -> void {
         const auto tree =
             algos::Tree{{"A", {"B", "C"}}, {"B", {"D", "E"}}, {"C", {"F"}}};

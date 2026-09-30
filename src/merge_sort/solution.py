@@ -11,7 +11,9 @@ def _merge(left: Sequence[int], right: Sequence[int]) -> list[int]:
         else:
             result.append(right[j])
             j += 1
-    return [*result, *left[i:], *right[j:]]
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
 
 
 def merge_sort(values: Sequence[int]) -> list[int]:

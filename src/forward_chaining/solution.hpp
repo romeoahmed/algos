@@ -15,18 +15,18 @@ struct Rule {
 };
 
 struct Inference {
-    // Includes the initial facts and every derived conclusion.
+    // Initial facts and all derived conclusions.
     Facts facts;
-    // New facts in discovery order, without duplicates or initial facts.
+    // New conclusions in discovery order, each appearing once.
     std::vector<std::string> derived;
 
     auto operator==(const Inference &) const -> bool = default;
 };
 
-// Applies rules in order until a full round adds no new facts.
+// Return the least rule-closed fact set and the discovery trace of new facts.
+// Requires finite positive rules, applied in order until no new facts appear.
 // All conditions must hold; empty conditions always hold.
 // New facts can trigger later rules in the same round.
-// Requires finite positive rules. Preserves inputs and performs no output.
 [[nodiscard]] auto infer(const Facts &facts, std::span<const Rule> rules)
     -> Inference;
 } // namespace algos

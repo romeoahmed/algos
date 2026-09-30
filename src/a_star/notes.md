@@ -62,7 +62,7 @@ A-STAR(roads, start, goal, h)
 
 ## 示例
 
-题目给出的 Romania 道路从 Arad 到 Bucharest 的最短路径为：
+以 Romania 道路图为例，Arad 到 Bucharest 的最短路径为：
 
 ```text
 Arad → Sibiu → Rimnicu → Pitesti → Bucharest

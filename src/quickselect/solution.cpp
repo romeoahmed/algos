@@ -1,7 +1,6 @@
 #include "solution.hpp"
 
 #include <cstddef>
-#include <iterator>
 #include <ranges>
 #include <span>
 #include <utility>
@@ -21,7 +20,7 @@ auto partition(std::span<const int> values, int pivot)
 } // namespace
 
 auto quickselect(std::span<const int> values, std::ptrdiff_t k) -> int {
-    const auto pivot = *std::next(values.begin(), std::ssize(values) / 2);
+    const auto pivot = values.subspan(values.size() / 2).front();
     const auto [greater, lower] = partition(values, pivot);
     const auto upper_count = std::ssize(values) - std::ssize(lower);
     if (k <= std::ssize(greater)) {

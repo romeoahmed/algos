@@ -11,7 +11,8 @@ def _partition(values: Sequence[int], pivot: int) -> tuple[list[int], list[int]]
 def quickselect(values: Sequence[int], k: int) -> int:
     """Return the k-th largest value, counting duplicates.
 
-    Requires 1 <= k <= len(values)."""
+    Requires 1 <= k <= len(values).
+    """
     pivot = values[len(values) // 2]
     greater, lower = _partition(values, pivot)
     upper_count = len(values) - len(lower)

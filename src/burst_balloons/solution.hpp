@@ -5,9 +5,8 @@
 #include <utility>
 
 namespace algos {
-// Returns the minimum arrow count needed to pierce every closed interval.
-// Each pair is (start, end), with start <= end. Both endpoints are included.
-// Empty input returns zero. Preserves input.
+// Return the fewest arrows piercing all closed intervals; empty returns zero.
+// Requires start <= end for each (start, end) pair; endpoints are included.
 [[nodiscard]] auto
 burst_balloons(std::span<const std::pair<int, int>> intervals) -> std::size_t;
 } // namespace algos

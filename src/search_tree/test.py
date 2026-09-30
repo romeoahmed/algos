@@ -1,10 +1,12 @@
 from collections.abc import Callable
+from operator import add
 
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
 from src.search_tree.solution import Trace, Tree, bfs, dfs
+from src.search_tree.solution import search as search_forest
 
 
 @st.composite
@@ -94,3 +96,32 @@ def test_stops_at_goal_with_an_unexpanded_frontier(
         ("D", ("E",), False),
         ("E", (), True),
     )
+
+
+def test_empty_frontier_and_disjoint_subtrees() -> None:
+    tree = {"A": ("B",), "X": ("Y",)}
+    assert search_forest(tree, (), "Y", add) == ()
+    assert search_forest(tree, ("A", "X"), "Y", add) == (
+        ("A", ("X",), False),
+        ("X", ("B",), False),
+        ("B", ("Y",), False),
+        ("Y", (), True),
+    )
+
+
+@pytest.mark.parametrize("search", [bfs, dfs], ids=["bfs", "dfs"])
+def test_chain_trace(search: Callable[[Tree, str, str], Trace]) -> None:
+    tree = {str(i): (str(i + 1),) for i in range(79)}
+    expected = tuple((str(i), (), i == 79) for i in range(80))
+    assert search(tree, "0", "79") == expected
+
+
+@pytest.mark.parametrize("search", [bfs, dfs], ids=["bfs", "dfs"])
+def test_trace_owns_its_snapshots(search: Callable[[Tree, str, str], Trace]) -> None:
+    tree = {"A": ("B", "C")}
+    expected = (("A", (), False), ("B", ("C",), True))
+    result = search(tree, "A", "B")
+    assert result == expected
+    tree.clear()
+    assert search(tree, "other", "missing") == (("other", (), False),)
+    assert result == expected

@@ -83,15 +83,15 @@ posterior = bayesian_inference(network, query=2, evidence={3: True})
 
 例如 C、S、R 全为 True 且 W=True 的联合概率为 0.5 × 0.1 × 0.8 × 0.99 = 0.0396。固定 W=True 后，八种事件如下：
 
-| C | S | R | 联合概率 |
-| --- | --- | --- | --- |
-| True | True | True | 0.039600 |
-| True | False | True | 0.324000 |
-| False | True | True | 0.049500 |
-| False | False | True | 0.045000 |
-| True | True | False | 0.009000 |
-| True | False | False | 0.000000 |
-| False | True | False | 0.180000 |
+| C     | S     | R     | 联合概率 |
+| ----- | ----- | ----- | -------- |
+| True  | True  | True  | 0.039600 |
+| True  | False | True  | 0.324000 |
+| False | True  | True  | 0.049500 |
+| False | False | True  | 0.045000 |
+| True  | True  | False | 0.009000 |
+| True  | False | False | 0.000000 |
+| False | True  | False | 0.180000 |
 | False | False | False | 0.000000 |
 
 前四行相加得到 t = 0.4581，后四行相加得到 f = 0.1890。因此 P(W=True) = 0.6471，P(R=True | W=True) = 0.4581 / 0.6471 ≈ 0.707928。
@@ -112,7 +112,7 @@ posterior = bayesian_inference(network, query=2, evidence={3: True})
 
 深度优先枚举只保留当前路径上的前缀，长度从 0 增至 n，总计 **O(n²) 额外空间、O(n) 递归深度**。输入的条件概率表可能指数大，不计入额外空间。若查询已在证据中，Python 直接返回的平均时间为 O(1)，C++ 为 O(log(|E| + 1))，额外空间均为 O(1)。
 
-Python 用元组保存前缀，以 `reduce` 编码父节点，以 `sum(map(...))` 汇总分支。C++ 用 `std::vector<std::uint8_t>` 保存 0/1，以 `std::ranges::fold_left` 编码；扩展前先预留所需空间，再用 `append_range` 复制前缀、追加当前值。每个分支仅修改自己的副本，两种实现都不修改输入，也没有跨调用缓存。跳过零概率分支可减少确定性网络中的计算，但不改变最坏复杂度。
+Python 用元组保存前缀，以 `reduce(..., initial=0)` 编码父节点。C++ 用 `std::vector<std::uint8_t>` 保存 0/1，以 `std::ranges::fold_left` 编码；扩展前先预留所需空间，再用 `append_range` 复制前缀、追加当前值。隐藏节点均直接相加 False、True 两个分支的贡献。每个分支仅修改自己的副本，两种实现都不修改输入，也没有跨调用缓存。跳过零概率分支可减少确定性网络中的计算，但不改变最坏复杂度。
 
 C++ 的输入视图、引用和闭包只在调用期间使用，前缀副本在递归返回前保持存活。Python 接口需要可重复访问的网络和父节点序列，不接受一次性迭代器。
 

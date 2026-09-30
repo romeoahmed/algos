@@ -1,7 +1,6 @@
 #include "solution.hpp"
 
 #include <cstddef>
-#include <iterator>
 #include <span>
 
 namespace algos {
@@ -14,8 +13,8 @@ auto rotated_search(std::span<const int> values, int target) noexcept
             return -1;
         }
         const auto middle = part.size() / 2;
-        const auto value = *std::next(part.begin(), std::ssize(part) / 2);
-        const auto index = offset + std::ssize(part) / 2;
+        const auto value = part.subspan(middle).front();
+        const auto index = offset + static_cast<std::ptrdiff_t>(middle);
         if (value == target) {
             return index;
         }
