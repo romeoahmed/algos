@@ -1,8 +1,18 @@
-cmake_minimum_required(VERSION 4.2)
+cmake_minimum_required(VERSION 4.4)
 project(algos LANGUAGES CXX)
 
 enable_testing()
 include(FetchContent)
+
+option(ALGOS_SANITIZE "Enable sanitizers in Debug" ON)
+
+# These predicates are evaluated in both target and test properties.
+set(msvc_debug
+    "$<AND:$<CONFIG:Debug>,$<STREQUAL:${CMAKE_CXX_COMPILER_FRONTEND_VARIANT},MSVC>>"
+)
+set(gnu_debug
+    "$<AND:$<CONFIG:Debug>,$<STREQUAL:${CMAKE_CXX_COMPILER_FRONTEND_VARIANT},GNU>>"
+)
 
 FetchContent_Declare(
     ut
@@ -31,16 +41,14 @@ target_compile_options(
     rapidcheck
     PRIVATE
         "$<$<CXX_COMPILER_FRONTEND_VARIANT:MSVC>:/FIalgorithm;/FIiterator>"
-        "$<$<NOT:$<CXX_COMPILER_FRONTEND_VARIANT:MSVC>>:SHELL:-include algorithm -include iterator>"
+        "$<$<CXX_COMPILER_FRONTEND_VARIANT:GNU>:SHELL:-include algorithm -include iterator>"
 )
 
-option(ALGOS_SANITIZE "Enable sanitizers in Debug" ON)
-
-if(ALGOS_SANITIZE AND CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+if(ALGOS_SANITIZE)
     # MSVC requires matching ASan container annotations in linked objects.
     target_compile_options(
         rapidcheck
-        PRIVATE "$<$<CONFIG:Debug>:/fsanitize=address>"
+        PRIVATE "$<${msvc_debug}:/fsanitize=address>"
     )
 endif()
 
@@ -58,6 +66,11 @@ foreach(
         a_star
         tromino_tiling
         karatsuba
+        jump_game
+        erase_overlap
+        burst_balloons
+        partition_labels
+        forward_chaining
 )
     add_executable(
         ${name}
@@ -73,54 +86,37 @@ foreach(
             CXX_EXTENSIONS NO
             CXX_SCAN_FOR_MODULES NO
             COMPILE_WARNING_AS_ERROR YES
+            EXPORT_COMPILE_COMMANDS YES
+    )
+    target_compile_options(
+        ${name}
+        PRIVATE
+            "$<$<CXX_COMPILER_FRONTEND_VARIANT:MSVC>:/W4;/permissive-;/utf-8;/Zc:__cplusplus>"
+            "$<$<CXX_COMPILER_FRONTEND_VARIANT:GNU>:-Wall;-Wextra;-Wpedantic;-Wconversion;-Wsign-conversion;-Wshadow;-Wformat=2>"
     )
     add_test(NAME ${name} COMMAND ${name})
 
-    if(CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
-        target_compile_options(
-            ${name}
-            PRIVATE /W4 /permissive- /utf-8 /Zc:__cplusplus
-        )
-        if(ALGOS_SANITIZE)
-            set_property(TARGET ${name} PROPERTY MSVC_RUNTIME_CHECKS "")
-            target_compile_options(
-                ${name}
-                PRIVATE "$<$<CONFIG:Debug>:/fsanitize=address>"
-            )
-            target_link_options(
-                ${name}
-                PRIVATE "$<$<CONFIG:Debug>:/INCREMENTAL:NO>"
-            )
-            # Locate the ASan runtime beside the compiler for Debug tests.
-            set_property(
-                TEST ${name}
-                PROPERTY
-                    ENVIRONMENT_MODIFICATION
-                        "$<$<CONFIG:Debug>:PATH=path_list_prepend:$<PATH:GET_PARENT_PATH,${CMAKE_CXX_COMPILER}>>"
-            )
-        endif()
-    elseif(CMAKE_CXX_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
+    if(ALGOS_SANITIZE)
+        # MSVC /RTC is incompatible with ASan.
+        set_property(TARGET ${name} PROPERTY MSVC_RUNTIME_CHECKS "")
         target_compile_options(
             ${name}
             PRIVATE
-                -Wall
-                -Wextra
-                -Wpedantic
-                -Wconversion
-                -Wsign-conversion
-                -Wshadow
-                -Wformat=2
+                "$<${msvc_debug}:/fsanitize=address>"
+                "$<${gnu_debug}:-fsanitize=address,undefined;-fno-sanitize-recover=all;-fno-omit-frame-pointer>"
         )
-        if(ALGOS_SANITIZE)
-            target_compile_options(
-                ${name}
-                PRIVATE
-                    "$<$<CONFIG:Debug>:-fsanitize=address,undefined;-fno-sanitize-recover=all;-fno-omit-frame-pointer>"
-            )
-            target_link_options(
-                ${name}
-                PRIVATE "$<$<CONFIG:Debug>:-fsanitize=address,undefined>"
-            )
-        endif()
+        target_link_options(
+            ${name}
+            PRIVATE
+                "$<${msvc_debug}:/INCREMENTAL:NO>"
+                "$<${gnu_debug}:-fsanitize=address,undefined>"
+        )
+        # Locate the MSVC ASan runtime beside the compiler for Debug tests.
+        set_property(
+            TEST ${name}
+            PROPERTY
+                ENVIRONMENT_MODIFICATION
+                    "$<${msvc_debug}:PATH=path_list_prepend:$<PATH:GET_PARENT_PATH,${CMAKE_CXX_COMPILER}>>"
+        )
     endif()
 endforeach()
