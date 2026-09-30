@@ -1,5 +1,6 @@
 .venv/
 .vs/
+.vscode/settings.json
 __pycache__/
 .hypothesis/
 .pytest_cache/
