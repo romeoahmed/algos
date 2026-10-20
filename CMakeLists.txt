@@ -72,6 +72,14 @@ foreach(
         partition_labels
         forward_chaining
         bayesian_inference
+        climbing_stairs
+        house_robber
+        unique_paths
+        min_cost_stairs
+        max_subarray
+        stock_profit
+        longest_increasing
+        rain_water
 )
     add_executable(
         ${name}

@@ -39,6 +39,14 @@ test.cpp       Boost.UT + RapidCheck 测试
 | [划分字母区间](src/partition_labels/notes.md)                     | 根据字符的最后位置确定分段边界   |
 | [规则正向推理](src/forward_chaining/notes.md)                     | 按序应用规则，求事实的最小闭包   |
 | [贝叶斯网络推断](src/bayesian_inference/notes.md)                 | 递归枚举，边缘化与归一化         |
+| [爬楼梯](src/climbing_stairs/notes.md)                            | 按最后一步计数，滚动两项窗口     |
+| [打家劫舍](src/house_robber/notes.md)                             | 前缀最优，比较选与不选           |
+| [不同路径](src/unique_paths/notes.md)                             | 二维计数，逐行求前缀和           |
+| [使用最小花费爬楼梯](src/min_cost_stairs/notes.md)                | 最小代价转移，楼顶取末两阶最小值 |
+| [最大子数组和](src/max_subarray/notes.md)                         | 以当前位置结尾，接上或重新开始   |
+| [买卖股票的最佳时机](src/stock_profit/notes.md)                   | 历史压缩为前缀最低价             |
+| [最长递增子序列](src/longest_increasing/notes.md)                 | 以当前位置结尾，遍历所有合法前驱 |
+| [接雨水](src/rain_water/notes.md)                                 | 前缀与后缀最大值作辅助状态       |
 
 ## 运行
 
