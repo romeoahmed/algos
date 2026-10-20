@@ -21,32 +21,54 @@ test.cpp       Boost.UT + RapidCheck 测试
 
 ## 算法索引
 
-| 算法                                                              | 核心思路                         |
-| ----------------------------------------------------------------- | -------------------------------- |
-| [归并排序](src/merge_sort/notes.md)                               | 递归分治，稳定归并               |
-| [第 k 大元素](src/quickselect/notes.md)                           | 按枢轴分组，递归选择             |
-| [搜索旋转数组](src/rotated_search/notes.md)                       | 识别有序半区，递归二分           |
-| [多数元素](src/majority/notes.md)                                 | 折叠投票状态                     |
-| [表达式的所有括号组合](src/expressions/notes.md)                  | 递归枚举，缓存子式               |
-| [每种字符至少出现 k 次的最长子串](src/longest_substring/notes.md) | 按低频字符切分，递归取最大值     |
-| [树的广度优先与深度优先搜索](src/search_tree/notes.md)            | 用待访问序列的合并策略统一搜索   |
-| [A* 最短路径](src/a_star/notes.md)                                | 启发式选择，松弛与重新展开       |
-| [缺一格棋盘覆盖](src/tromino_tiling/notes.md)                     | 中心骨牌构造四个同类子问题       |
-| [Karatsuba 大整数乘法](src/karatsuba/notes.md)                    | 三次递归乘法与移位组合           |
-| [跳跃游戏 II](src/jump_game/notes.md)                             | 逐层扩展可达范围，求最少跳数     |
-| [无重叠区间](src/erase_overlap/notes.md)                          | 选择最早结束的区间，筛选兼容区间 |
-| [用最少箭引爆气球](src/burst_balloons/notes.md)                   | 在最早右端点射箭，筛选剩余区间   |
-| [划分字母区间](src/partition_labels/notes.md)                     | 根据字符的最后位置确定分段边界   |
-| [规则正向推理](src/forward_chaining/notes.md)                     | 按序应用规则，求事实的最小闭包   |
-| [贝叶斯网络推断](src/bayesian_inference/notes.md)                 | 递归枚举，边缘化与归一化         |
-| [爬楼梯](src/climbing_stairs/notes.md)                            | 按最后一步计数，滚动两项窗口     |
-| [打家劫舍](src/house_robber/notes.md)                             | 前缀最优，比较选与不选           |
-| [不同路径](src/unique_paths/notes.md)                             | 二维计数，逐行求前缀和           |
-| [使用最小花费爬楼梯](src/min_cost_stairs/notes.md)                | 最小代价转移，楼顶取末两阶最小值 |
-| [最大子数组和](src/max_subarray/notes.md)                         | 以当前位置结尾，接上或重新开始   |
-| [买卖股票的最佳时机](src/stock_profit/notes.md)                   | 历史压缩为前缀最低价             |
-| [最长递增子序列](src/longest_increasing/notes.md)                 | 以当前位置结尾，遍历所有合法前驱 |
-| [接雨水](src/rain_water/notes.md)                                 | 前缀与后缀最大值作辅助状态       |
+### 递归与分治
+
+| 算法                                                              | 核心思路                     |
+| ----------------------------------------------------------------- | ---------------------------- |
+| [归并排序](src/merge_sort/notes.md)                               | 递归分治，稳定归并           |
+| [第 k 大元素](src/quickselect/notes.md)                           | 按枢轴分组，递归选择         |
+| [搜索旋转数组](src/rotated_search/notes.md)                       | 识别有序半区，递归二分       |
+| [表达式的所有括号组合](src/expressions/notes.md)                  | 递归枚举，缓存子式           |
+| [每种字符至少出现 k 次的最长子串](src/longest_substring/notes.md) | 按低频字符切分，递归取最大值 |
+| [缺一格棋盘覆盖](src/tromino_tiling/notes.md)                     | 中心骨牌构造四个同类子问题   |
+| [Karatsuba 大整数乘法](src/karatsuba/notes.md)                    | 三次递归乘法与移位组合       |
+
+### 搜索
+
+| 算法                                                   | 核心思路                       |
+| ------------------------------------------------------ | ------------------------------ |
+| [树的广度优先与深度优先搜索](src/search_tree/notes.md) | 用待访问序列的合并策略统一搜索 |
+| [A* 最短路径](src/a_star/notes.md)                     | 启发式选择，松弛与重新展开     |
+
+### 贪心与扫描
+
+| 算法                                            | 核心思路                         |
+| ----------------------------------------------- | -------------------------------- |
+| [多数元素](src/majority/notes.md)               | 折叠投票状态                     |
+| [跳跃游戏 II](src/jump_game/notes.md)           | 逐层扩展可达范围，求最少跳数     |
+| [无重叠区间](src/erase_overlap/notes.md)        | 选择最早结束的区间，筛选兼容区间 |
+| [用最少箭引爆气球](src/burst_balloons/notes.md) | 在最早右端点射箭，筛选剩余区间   |
+| [划分字母区间](src/partition_labels/notes.md)   | 根据字符的最后位置确定分段边界   |
+
+### 动态规划
+
+| 算法                                               | 核心思路                         |
+| -------------------------------------------------- | -------------------------------- |
+| [爬楼梯](src/climbing_stairs/notes.md)             | 按最后一步计数，滚动两项窗口     |
+| [打家劫舍](src/house_robber/notes.md)              | 前缀最优，比较选与不选           |
+| [不同路径](src/unique_paths/notes.md)              | 二维计数，逐行求前缀和           |
+| [使用最小花费爬楼梯](src/min_cost_stairs/notes.md) | 最小代价转移，楼顶取末两阶最小值 |
+| [最大子数组和](src/max_subarray/notes.md)          | 以当前位置结尾，接上或重新开始   |
+| [买卖股票的最佳时机](src/stock_profit/notes.md)    | 历史压缩为前缀最低价             |
+| [最长递增子序列](src/longest_increasing/notes.md)  | 以当前位置结尾，遍历所有合法前驱 |
+| [接雨水](src/rain_water/notes.md)                  | 前缀与后缀最大值作辅助状态       |
+
+### 知识推理
+
+| 算法                                              | 核心思路                       |
+| ------------------------------------------------- | ------------------------------ |
+| [规则正向推理](src/forward_chaining/notes.md)     | 按序应用规则，求事实的最小闭包 |
+| [贝叶斯网络推断](src/bayesian_inference/notes.md) | 递归枚举，边缘化与归一化       |
 
 ## 运行
 
@@ -105,7 +127,7 @@ Debug 默认启用 ASan，GCC/Clang 另启用 UBSan；配置时加 `-DALGOS_SANI
 
 ## 维护
 
-新增算法时，补齐上述六个文件，并更新本页索引和根 [CMakeLists.txt](CMakeLists.txt)。实现约定、测试要求和检查命令见 [AGENTS.md](AGENTS.md)。
+新增算法时，补齐上述六个文件，在本页索引的对应分类中登记，并加入根 [CMakeLists.txt](CMakeLists.txt) 的目标列表。实现约定、测试要求和检查命令见 [AGENTS.md](AGENTS.md)。
 
 ## 许可证
 

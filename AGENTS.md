@@ -4,7 +4,7 @@ Python 3.14+ 与 C++23 算法学习项目。目录结构和运行方式见 [READ
 
 ## 内容与实现
 
-- 每题位于 `src/<algorithm>/`，包含 `notes.md`、`solution.py`、`solution.hpp`、`solution.cpp`、`test.py`、`test.cpp`。新增题目时同步更新 README 索引和根 CMake 目标列表。
+- 每题位于 `src/<algorithm>/`，包含 `notes.md`、`solution.py`、`solution.hpp`、`solution.cpp`、`test.py`、`test.cpp`。新增题目时在 README 索引的对应分类中登记，并加入根 CMake 目标列表。
 - 讲解使用简体中文，依次包含“问题、思路、伪代码、示例、正确性、复杂度与实现”各节。遵循[记号约定](src/notation.md)，保持讲解、两种语言的实现和测试语义一致。
 - 对应 LeetCode 时在问题节末注明题号；伪代码节以 `遵循[记号约定](../notation.md)。` 开头。讲解与伪代码中的减号、负号用 `−`（U+2212），代码、标识符和命令保持 ASCII。
 - 标识符、文档字符串和代码注释使用英文。函数、变量和命名空间采用 `snake_case`，类型及类型别名采用 `PascalCase`。
