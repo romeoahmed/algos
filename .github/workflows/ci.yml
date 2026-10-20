@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -15,34 +16,38 @@ concurrency:
 
 jobs:
   python:
+    name: Python
     runs-on: ubuntu-26.04
+    timeout-minutes: 15
     env:
       UV_LOCKED: "true"
     steps:
-      - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10.2.0
-      - name: Check Python
-        run: |
-          uv sync
-          uv run ruff check .
-          uv run ruff format --check .
-          uv run ty check
-          uv run pytest
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      - run: uv sync
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run ty check
+      - run: uv run pytest
 
   cpp:
     name: C++ (${{ matrix.compiler }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
         include:
+          # Lint once: the Debug and Release sources are identical.
           - compiler: Clang
             os: ubuntu-26.04
             preset: default
             options: >-
               -DCMAKE_CXX_COMPILER=clang++-22
               -DCMAKE_CXX_FLAGS=-stdlib=libc++
-              -DCMAKE_CXX_CLANG_TIDY=clang-tidy-22
+              '-DCMAKE_CXX_CLANG_TIDY=$<$<CONFIG:Debug>:clang-tidy-22>'
           - compiler: GCC
             os: ubuntu-26.04
             preset: default
@@ -52,13 +57,15 @@ jobs:
             preset: vs2026
             prefix: vs2026-
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Install libc++
         if: matrix.compiler == 'Clang'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libc++-22-dev libc++abi-22-dev
-      - name: Check C++ formatting
+      - name: Check formatting
         if: matrix.compiler == 'Clang'
         run: clang-format-22 --dry-run --Werror src/*/*.cpp src/*/*.hpp
       - name: Configure
