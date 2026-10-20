@@ -16,7 +16,7 @@
 
 ## 伪代码
 
-`FOLD` 从左到右应用转换，rules 在本次调用中保持只读。
+遵循[记号约定](../notation.md)。`FOLD` 从左到右应用转换，rules 在本次调用中保持只读。
 
 ```text
 INFER(facts, rules)

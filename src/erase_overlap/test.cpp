@@ -14,6 +14,7 @@
 #include <vector>
 
 namespace {
+// Keep the largest pairwise compatible subset.
 auto minimum_removals(const std::vector<std::pair<int, int>> &intervals)
     -> std::size_t {
     auto best = std::size_t{0};

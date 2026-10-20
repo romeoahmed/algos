@@ -17,7 +17,7 @@
 
 ## 伪代码
 
-[记号约定](../notation.md)。`CHILDREN(T, v)` 在键缺失时返回空序列。
+遵循[记号约定](../notation.md)。`CHILDREN(T, v)` 在键缺失时返回空序列。
 
 ```text
 SEARCH(T, F, goal, merge)

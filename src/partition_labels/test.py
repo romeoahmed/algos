@@ -6,6 +6,7 @@ from src.partition_labels.solution import partition_labels
 
 
 def exhaustive_partition(text: str) -> tuple[int, ...]:
+    """Try every cut pattern and keep the valid one with the most parts."""
     if not text:
         return ()
     best: tuple[int, ...] = ()

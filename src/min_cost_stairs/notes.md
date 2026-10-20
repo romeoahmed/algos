@@ -20,10 +20,12 @@
 
 ## 伪代码
 
+遵循[记号约定](../notation.md)。
+
 ```text
 MIN-COST-STAIRS(C)
     (a, b) ← (C[0], C[1])          // (dp[0], dp[1])
-    for x in C[2:]
+    for x in C[2:|C|]
         (a, b) ← (b, MIN(a, b) + x)
     return MIN(a, b)
 ```
@@ -53,4 +55,4 @@ C = `[1, 100, 1, 1, 1, 100, 1, 1, 100, 1]`：
 
 单次遍历，时间 Θ(n)，额外空间 O(1)。
 
-Python 先从迭代器中取出前两项作为初值，再用 `functools.reduce` 折叠其余费用。函数接受 `Iterable[int]`，会完整消耗迭代器，不复制切片。C++ 以 `subspan(2)` 表示 C[2:]，用 `std::ranges::fold_left` 折叠，并以 `std::int64_t` 累加，避免多个 `int` 相加溢出。
+Python 先从迭代器中取出前两项作为初值，再用 `functools.reduce` 折叠其余费用。函数接受 `Iterable[int]`，会完整消耗迭代器，不复制切片。C++ 以 `subspan(2)` 表示 C[2:|C|]，用 `std::ranges::fold_left` 折叠，并以 `std::int64_t` 累加，避免多个 `int` 相加溢出。

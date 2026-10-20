@@ -20,6 +20,8 @@ L[i] = 1 + MAX({L[j] : j < i, A[j] < A[i]} ∪ {0})
 
 ## 伪代码
 
+遵循[记号约定](../notation.md)。
+
 ```text
 LONGEST-INCREASING(A)
     L ← []

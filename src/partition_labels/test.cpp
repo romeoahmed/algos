@@ -12,6 +12,7 @@
 #include <vector>
 
 namespace {
+// Try every cut pattern and keep the valid one with the most parts.
 auto exhaustive_partition(std::string_view text) -> std::vector<std::size_t> {
     if (text.empty()) {
         return {};

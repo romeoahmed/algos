@@ -23,11 +23,13 @@ dp[0] = 1 并不表示“有一个动作”。它表示空走法：其他走法�
 
 ## 伪代码
 
+遵循[记号约定](../notation.md)。
+
 ```text
 CLIMBING-STAIRS(n)
-    (a, b) ← (0, 1)            // (dp[-1], dp[0])
+    (a, b) ← (0, 1)            // (dp[−1], dp[0])
     for i ← 1 to n
-        (a, b) ← (b, a + b)    // (dp[i-1], dp[i])
+        (a, b) ← (b, a + b)    // (dp[i − 1], dp[i])
     return b
 ```
 

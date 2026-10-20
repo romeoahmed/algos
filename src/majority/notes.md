@@ -4,6 +4,8 @@
 
 输入为非空整数序列，保证某个值出现次数严格超过 n/2。返回该多数元素。
 
+对应 LeetCode 169。
+
 ## 思路
 
 Boyer–Moore 投票法维护候选值 c 和余额 b。每读入一个值 x，若 b = 0，先令 c = x；随后 x = c 时余额加 1，否则减 1。
@@ -12,7 +14,7 @@ Boyer–Moore 投票法维护候选值 c 和余额 b。每读入一个值 x，�
 
 ## 伪代码
 
-[记号约定](../notation.md)。
+遵循[记号约定](../notation.md)。
 
 ```text
 MAJORITY(A)
@@ -23,7 +25,7 @@ MAJORITY(A)
         if x = c
             b ← b + 1
         else
-            b ← b - 1
+            b ← b − 1
     return c
 ```
 

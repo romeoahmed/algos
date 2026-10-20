@@ -18,6 +18,8 @@
 
 ## 伪代码
 
+遵循[记号约定](../notation.md)。
+
 ```text
 UNIQUE-PATHS(m, n)
     s ← MIN(m, n); l ← MAX(m, n)

@@ -23,10 +23,12 @@ E[i] 只回答以 i 结尾的问题，而最优子数组可以在任何位置结
 
 ## 伪代码
 
+遵循[记号约定](../notation.md)。
+
 ```text
 MAX-SUBARRAY(A)
     e ← A[0]; best ← A[0]
-    for x in A[1:]
+    for x in A[1:|A|]
         e ← MAX(x, e + x)
         best ← MAX(best, e)
     return best

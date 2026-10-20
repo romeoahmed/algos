@@ -14,8 +14,8 @@
 #include <vector>
 
 namespace {
-// Any arrow can move to the smallest right endpoint among the intervals it
-// hits.
+// Try every set of right endpoints as arrow positions. Any arrow can move to
+// the smallest right endpoint among the intervals it hits.
 auto minimum_cover(const std::vector<std::pair<int, int>> &intervals)
     -> std::size_t {
     auto best = intervals.size();

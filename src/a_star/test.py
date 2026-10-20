@@ -8,6 +8,7 @@ from src.a_star.solution import Heuristic, Roads, Route, a_star
 
 
 def shortest_costs(roads: Roads) -> dict[tuple[str, str], int]:
+    """Compute all-pairs shortest costs with Floyd-Warshall."""
     costs = {(node, node): 0 for node in roads}
     for node, edges in roads.items():
         for neighbor, distance in edges:

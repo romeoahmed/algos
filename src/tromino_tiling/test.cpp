@@ -12,6 +12,7 @@
 #include <vector>
 
 namespace {
+// Check L-shaped tiles covering every cell except hole exactly once.
 auto valid_cover(std::size_t size, algos::Cell hole,
                  std::span<const algos::Tile> tiles) -> bool {
     if (tiles.size() != (size * size - 1) / 3) {

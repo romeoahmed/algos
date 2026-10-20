@@ -21,6 +21,8 @@
 
 ## 伪代码
 
+遵循[记号约定](../notation.md)。
+
 ```text
 STOCK-PROFIT(P)
     low ← ∞; best ← 0

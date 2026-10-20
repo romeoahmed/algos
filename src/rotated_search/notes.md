@@ -4,6 +4,8 @@
 
 输入为严格递增整数序列旋转后的结果，允许空序列。返回目标下标，未找到时返回 −1。
 
+对应 LeetCode 33。
+
 ## 思路
 
 旋转序列至多有一个下降断点。检查中点 m 后，至少能确定一侧有序：
@@ -15,20 +17,20 @@
 
 ## 伪代码
 
-[记号约定](../notation.md)。搜索区间为 `[l, r)`。
+遵循[记号约定](../notation.md)。搜索区间为 `[l, r)`。
 
 ```text
 ROTATED-SEARCH(A, x)
     SEARCH(l, r)
         if l = r
-            return -1
-        m ← l + ⌊(r - l) / 2⌋
+            return −1
+        m ← l + ⌊(r − l) / 2⌋
         if A[m] = x
             return m
         if A[l] ≤ A[m]
             keep-left ← A[l] ≤ x < A[m]
         else
-            keep-left ← not (A[m] < x ≤ A[r - 1])
+            keep-left ← not (A[m] < x ≤ A[r − 1])
         if keep-left
             return SEARCH(l, m)
         return SEARCH(m + 1, r)

@@ -4,6 +4,8 @@
 
 输入为非空整数序列，保证 `1 ≤ k ≤ n`。返回第 k 大的值，重复值分别计入排名。输入保持不变。
 
+对应 LeetCode 215。
+
 ## 思路
 
 取中间位置的值作为枢轴 p。`PARTITION` 返回大于 p 的组 G 和小于 p 的组 L；其余元素都等于 p，无需另建一组。
@@ -18,7 +20,7 @@
 
 ## 伪代码
 
-[记号约定](../notation.md)。
+遵循[记号约定](../notation.md)。
 
 ```text
 PARTITION(A, p)
@@ -27,12 +29,12 @@ PARTITION(A, p)
 QUICKSELECT(A, k)
     p ← A[⌊|A| / 2⌋]
     (G, L) ← PARTITION(A, p)
-    u ← |A| - |L|
+    u ← |A| − |L|
     if k ≤ |G|
         return QUICKSELECT(G, k)
     if k ≤ u
         return p
-    return QUICKSELECT(L, k - u)
+    return QUICKSELECT(L, k − u)
 ```
 
 ## 示例

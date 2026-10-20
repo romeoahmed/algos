@@ -11,6 +11,7 @@ from src.bayesian_inference.solution import BooleanNode, bayesian_inference
 def event_masses(
     network: list[BooleanNode], query: int, evidence: dict[int, bool]
 ) -> tuple[float, float]:
+    """Sum full assignments independently of recursive marginalization."""
     masses = [0.0, 0.0]
     for event in product((False, True), repeat=len(network)):
         if any(event[index] != value for index, value in evidence.items()):

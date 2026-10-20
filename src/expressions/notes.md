@@ -6,6 +6,8 @@
 
 保持操作数与运算符顺序，返回所有完整加括号方式的结果；保留重复值，输出顺序不限。
 
+对应 LeetCode 241。
+
 ## 思路
 
 每种括号方式对应一棵有序二叉树：叶子为操作数，内部节点为运算符，根代表最后一次运算。
@@ -14,7 +16,7 @@
 
 ## 伪代码
 
-[记号约定](../notation.md)。memo 仅在本次调用内共享。
+遵循[记号约定](../notation.md)。memo 仅在本次调用内共享。
 
 ```text
 EXPRESSIONS(s)
@@ -24,7 +26,7 @@ EXPRESSIONS(s)
         if t ∈ memo
             return memo[t]
         B ← []
-        for i ← 0 to |t| - 1
+        for i ← 0 to |t| − 1
             if t[i] ∈ {+, -, *}
                 L ← SOLVE(t[0:i]); R ← SOLVE(t[i+1:|t|])
                 for a in L

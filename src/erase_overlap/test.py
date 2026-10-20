@@ -8,6 +8,7 @@ from src.erase_overlap.solution import erase_overlap
 
 
 def minimum_removals(intervals: list[tuple[int, int]]) -> int:
+    """Keep the largest pairwise compatible subset."""
     kept = max(
         size
         for size in range(len(intervals) + 1)

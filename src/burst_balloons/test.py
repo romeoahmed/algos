@@ -8,7 +8,10 @@ from src.burst_balloons.solution import burst_balloons
 
 
 def minimum_cover(intervals: list[tuple[int, int]]) -> int:
-    # Any arrow can move to the smallest right endpoint among the intervals it hits.
+    """Try every set of right endpoints as arrow positions.
+
+    Any arrow can move to the smallest right endpoint among the intervals it hits.
+    """
     endpoints = {end for _, end in intervals}
     return min(
         size

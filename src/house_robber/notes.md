@@ -21,9 +21,11 @@
 
 ## 伪代码
 
+遵循[记号约定](../notation.md)。
+
 ```text
 HOUSE-ROBBER(A)
-    (a, b) ← (0, 0)                // (dp[-1], dp[0])
+    (a, b) ← (0, 0)                // (dp[−1], dp[0])
     for x in A
         (a, b) ← (b, MAX(b, a + x))
     return b

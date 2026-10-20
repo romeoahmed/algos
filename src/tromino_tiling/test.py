@@ -9,6 +9,7 @@ from src.tromino_tiling.solution import Cell, Tile, tromino_tiling
 
 
 def check_cover(size: int, hole: Cell, tiles: tuple[Tile, ...]) -> None:
+    """Assert L-shaped tiles covering every cell except hole exactly once."""
     assert len(tiles) == (size * size - 1) // 3
     for tile in tiles:
         assert len(set(tile)) == 3

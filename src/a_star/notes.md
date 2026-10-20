@@ -37,7 +37,7 @@ A* 同时考虑已经走了多远，以及估计还要走多远：
 
 ## 伪代码
 
-[记号约定](../notation.md)。映射的 `COPY` 产生独立映射；路径按值拼接。`ARGMIN` 返回使给定键最小的城市，`REMOVE` 删除映射项，`NONE` 表示不可达。
+遵循[记号约定](../notation.md)。映射的 `COPY` 产生独立映射；路径按值拼接。`ARGMIN` 返回使给定键最小的城市，`REMOVE` 删除映射项，`NONE` 表示不可达。
 
 ```text
 A-STAR(roads, start, goal, h)
