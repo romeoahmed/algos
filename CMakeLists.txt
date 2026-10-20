@@ -17,7 +17,7 @@ set(gnu_debug
 FetchContent_Declare(
     ut
     GIT_REPOSITORY https://github.com/boost-ext/ut.git
-    GIT_TAG f923e6fe4b7542d75e0c4ee54ad0af6a5382a87c # v2.3.1
+    GIT_TAG 89d751b051ea250597b58353f2df6230bca04730
     GIT_SUBMODULES ""
     SYSTEM
     EXCLUDE_FROM_ALL
@@ -25,23 +25,17 @@ FetchContent_Declare(
 FetchContent_Declare(
     rapidcheck
     GIT_REPOSITORY https://github.com/emil-e/rapidcheck.git
-    GIT_TAG 6e8dadfdafa3a74eabb52ead87f8787f72eccd0b
+    GIT_TAG 2c3c4365aca21ef4e612768fdc95b1ce8b39a651
     GIT_SUBMODULES ""
     SYSTEM
     EXCLUDE_FROM_ALL
 )
 FetchContent_MakeAvailable(ut rapidcheck)
 
-# Supply RapidCheck's missing headers; its MSVC /O2 conflicts with /RTC.
+# RapidCheck compiles Random.cpp with MSVC /O2, which conflicts with /RTC.
 set_target_properties(
     rapidcheck
     PROPERTIES SKIP_LINTING YES MSVC_RUNTIME_CHECKS ""
-)
-target_compile_options(
-    rapidcheck
-    PRIVATE
-        "$<$<CXX_COMPILER_FRONTEND_VARIANT:MSVC>:/FIalgorithm;/FIiterator>"
-        "$<$<CXX_COMPILER_FRONTEND_VARIANT:GNU>:SHELL:-include algorithm -include iterator>"
 )
 
 if(ALGOS_SANITIZE)
