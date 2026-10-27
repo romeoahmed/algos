@@ -74,6 +74,10 @@ foreach(
         stock_profit
         longest_increasing
         rain_water
+        knapsack
+        longest_common
+        edit_distance
+        obstacle_paths
 )
     add_executable(
         ${name}

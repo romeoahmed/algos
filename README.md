@@ -62,6 +62,10 @@ test.cpp       Boost.UT + RapidCheck 测试
 | [买卖股票的最佳时机](src/stock_profit/notes.md)    | 历史压缩为前缀最低价             |
 | [最长递增子序列](src/longest_increasing/notes.md)  | 以当前位置结尾，遍历所有合法前驱 |
 | [接雨水](src/rain_water/notes.md)                  | 前缀与后缀最大值作辅助状态       |
+| [0-1 背包](src/knapsack/notes.md)                  | 物品与容量两个坐标，比较选与不选 |
+| [最长公共子序列](src/longest_common/notes.md)      | 两个前缀，末尾相同时沿对角线加一 |
+| [编辑距离](src/edit_distance/notes.md)             | 按最后一次编辑分为三个来源       |
+| [不同路径 II](src/obstacle_paths/notes.md)         | 障碍格清零，切断经过的路径       |
 
 ### 知识推理
 
