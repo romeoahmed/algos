@@ -15,4 +15,4 @@ def min_cost_stairs(costs: Iterable[int]) -> int:
 
     steps = iter(costs)
     start = next(steps), next(steps)
-    return min(reduce(climb, steps, start))
+    return min(reduce(climb, steps, initial=start))

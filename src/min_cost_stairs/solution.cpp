@@ -7,7 +7,8 @@
 
 namespace algos {
 auto min_cost_stairs(std::span<const int> costs) noexcept -> std::int64_t {
-    // The window holds (dp[i - 1], dp[i]), the cheapest paid stands.
+    // The window holds (dp[i - 1], dp[i]): the cheapest totals for standing on
+    // each step after paying for it.
     const auto climb = [](auto window, int cost) -> auto {
         const auto [before, current] = window;
         return std::pair{current, std::min(before, current) + cost};

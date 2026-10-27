@@ -13,4 +13,4 @@ def house_robber(values: Iterable[int]) -> int:
         before, best = window
         return best, max(best, before + value)
 
-    return reduce(visit, values, (0, 0))[1]
+    return reduce(visit, values, initial=(0, 0))[1]

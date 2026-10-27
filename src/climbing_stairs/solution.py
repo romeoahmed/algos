@@ -11,4 +11,4 @@ def climbing_stairs(n: int) -> int:
         before, current = window
         return current, before + current
 
-    return reduce(climb, range(n), (0, 1))[1]
+    return reduce(climb, range(n), initial=(0, 1))[1]

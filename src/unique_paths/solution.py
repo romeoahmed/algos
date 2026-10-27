@@ -12,4 +12,4 @@ def unique_paths(rows: int, columns: int) -> int:
         return list(accumulate(row))
 
     shorter, longer = min(rows, columns), max(rows, columns)
-    return reduce(advance, range(longer - 1), [1] * shorter)[-1]
+    return reduce(advance, range(longer - 1), initial=[1] * shorter)[-1]
