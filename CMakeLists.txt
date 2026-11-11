@@ -78,6 +78,13 @@ foreach(
         longest_common
         edit_distance
         obstacle_paths
+        valid_parentheses
+        reverse_list
+        stack_queue
+        hash_set
+        two_sum
+        group_anagrams
+        longest_consecutive
 )
     add_executable(
         ${name}
